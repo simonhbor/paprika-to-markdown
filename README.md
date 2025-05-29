@@ -1,8 +1,10 @@
 # Paprika to Markdown
+This repo is just a fork from [Simon Bor's](https://github.com/simonhbor/paprika-to-markdown); I did some tiny code fixes, but he and Brian Kohles did all the hard work!
+
 Converts a paprika recipe export file to markdown files with images
 
 ## Summary
-Export all your recipes from the Paprika 3 app and converts them all to standard markdown files, with images. It uses Python3 and has been started on Mac OS only.
+Exports all your recipes from the Paprika 3 app and converts them all to standard markdown files, with images. It uses Python3 and has been started on Mac OS only.
 
 **Quick steps**
 
@@ -12,7 +14,7 @@ Export all your recipes from the Paprika 3 app and converts them all to standard
 4. rename that file to "myRecipes.paprikarecipes"
 5. place that file in the "input" folder of this repo
 6. open a terminal window to the root folder of the repo
-7. enter the command `./paprikaToMd.py` - this is the only code in the whole repo, the rest is there to help out
+7. enter the command `python paprikaToMd.py` - the .py file is the only code in the whole repo, the rest is there to help out
 
 ## Background
 This is a fork of [this repo](https://gitlab.com/briankohles/paprika-to-grocery-markdown) - **thanks so much to Brian Kohles** for doing most of the heavy lifting!! That project aimed to convert Paprike recipes to the [Grocery App Markdown Format](https://github.com/cnstoll/Grocery-Recipe-Format), but this repo keeps things simpler (and fixes a number of bugs).
