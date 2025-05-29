@@ -117,7 +117,7 @@ for recipe in recipes:
     
     # Open the recipe file & read the JSON
     recipeData = json.load(open(recipeFileIn))
-    cleanName = re.sub('[\']', '', recipeData['name']).strip()
+    cleanName = re.sub('[\'/]', '', recipeData['name']).strip()
     recipePath = outputDir + cleanName+'.md'
 
     # NAME - frontmatter
@@ -149,26 +149,27 @@ for recipe in recipes:
     
     # CATEGORIES - markdown merge into a list of #tags #like #this
     rCategories = ''
-    if recipeData['categories']:
+    if 'categories' in recipeData:
         rCategories = '#' + ' #'.join(recipeData['categories'])
 
     # RATING - markdown
     rRating = ''
-    if recipeData['rating']:
+    if 'rating' in recipeData:
         rRating = '#' + str(recipeData['rating']) + "star"
     
     # TAGS - markdown 
     rTags = ''
     if rRating or rCategories:
         rTags = '\n> **tags**: ' + rCategories + ' ' + rRating
-
+    
     # DESCRIPTION - markdown
     rDescription = ''
-    if recipeData['description'] and not recipeData['description'].isspace():
-        # remove all extra new lines, then space out paragraphs
-        rDescription = re.sub('\n+', '\n', recipeData['description'])
-        rDescription = '\n\n## Description\n' + re.sub('\n', '\n\n', rDescription)
-
+    if 'description' in recipeData: 
+        if not recipeData['description'].isspace():
+            # remove all extra new lines, then space out paragraphs
+            rDescription = re.sub('\n+', '\n', recipeData['description'])
+            rDescription = '\n\n## Description\n' + re.sub('\n', '\n\n', rDescription)
+    
     # INGREDIENTS - markdown list with subheadings
     rIngredients = '\n\n## Ingredients\n'
     for ingr in recipeData['ingredients'].split("\n"):
@@ -194,43 +195,44 @@ for recipe in recipes:
 
     # DIRECTIONS - markdown
     rDirections = ''
-    if recipeData['directions'] and not recipeData['directions'].isspace():
-        # remove all extra new lines, then space out paragraphs
-        rDirections = re.sub('\n+', '\n', recipeData['directions'])
-        rDirections = '\n\n## Directions\n' + re.sub('\n', '\n\n', rDirections)
+    if 'directions' in recipeData:
+        if not recipeData['directions'].isspace():
+            # remove all extra new lines, then space out paragraphs
+            rDirections = re.sub('\n+', '\n', recipeData['directions'])
+            rDirections = '\n\n## Directions\n' + re.sub('\n', '\n\n', rDirections)
 
     # NOTES - markdown
     rNotes = ''
-    if recipeData['notes'] and not recipeData['notes'].isspace():
-        # remove all extra new lines, then space out paragraphs
-        rNotes = re.sub('\n+', '\n', recipeData['notes'])
-        rNotes = '\n\n## Notes\n' + re.sub('\n', '\n\n', rNotes)
+    if 'notes' in recipeData:
+        if not recipeData['notes'].isspace():
+            # remove all extra new lines, then space out paragraphs
+            rNotes = re.sub('\n+', '\n', recipeData['notes'])
+            rNotes = '\n\n## Notes\n' + re.sub('\n', '\n\n', rNotes)
 
     # GENERAL DATA = markdown
     rData= ''
     dataList = []
-    if recipeData['prep_time']:
+    if 'prep_time' in recipeData:
         dataList.append('**prep** ' + recipeData['prep_time'])
-    if recipeData['cook_time']:
+    if 'cook_time' in recipeData:
         dataList.append('**cook** ' + recipeData['cook_time'])
-    if recipeData['total_time']:
+    if 'total_time' in recipeData:
         dataList.append('**total** ' + recipeData['total_time'])
-    
-    recipeData['servings']
 
-    if len(rData) > 0 or recipeData['servings']:
+    if len(rData) > 0 or 'servings' in recipeData:
         rData = '\n\n## Data\n'
     if len(rData) > 0:
         rData = rData + ' | '.join(dataList)
-    if recipeData['servings']:
+    if 'servings' in recipeData:
         rData = rData + ' | **serves** ' + recipeData['servings']
 
     # NUTRITION - markdown
     rNutrition = ''
-    if recipeData['nutritional_info'] and not recipeData['nutritional_info'].isspace():
-        # remove all extra new lines, then space out paragraphs
-        rNutrition = re.sub('\n+', '\n', recipeData['nutritional_info'])
-        rNutrition = '\n\n## Nutrition\n' + re.sub('\n', '\n\n', rNutrition)
+    if 'nutritional_info' in recipeData:
+        if not recipeData['nutritional_info'].isspace():
+            # remove all extra new lines, then space out paragraphs
+            rNutrition = re.sub('\n+', '\n', recipeData['nutritional_info'])
+            rNutrition = '\n\n## Nutrition\n' + re.sub('\n', '\n\n', rNutrition)
 
     # FORMAT FINAL MARKDOWN STRING
     markdownTemplate = '---\ntitle: {nameFront}{date}{source}\n---\n# {nameHeading}{tags}{photo}{description}{ingredients}{directions}{notes}{data}'.format(
